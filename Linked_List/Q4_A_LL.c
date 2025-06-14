@@ -84,9 +84,29 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void moveEvenItemsToBack(LinkedList *ll)
-{
-	/* add your code here */
+void moveEvenItemsToBack(LinkedList *ll) {
+    // 원래 크기 저장 
+	int original_size = ll->size;
+    int processed = 0;
+    // 인덱스 초기화
+    int index = 0;
+    // 원래 크기만큼 반복
+    while (processed < original_size) {
+        
+        // 현재 인덱스의 노드 찾기
+        ListNode *current = findNode(ll, index);
+        // 홀수인지 짝수인지 확인
+        if (current->item % 2 == 0) {
+            int value = current->item; // 값 임시 저장
+            // 현재 위치에서 제거
+			removeNode(ll, index);
+            insertNode(ll, ll->size, value);// 맨 뒤에 삽입
+        
+        } else {
+            index++;// 다음 위치로 이동
+        }
+		processed++;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
