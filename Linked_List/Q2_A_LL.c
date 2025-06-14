@@ -103,7 +103,19 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+    int insertPos = 1;  // 첫 번째 삽입 위치 (인덱스 1)
+    
+    // ll2가 비어있지 않고, ll1에 삽입할 위치가 있는 동안 반복
+    while (ll2->head != NULL && insertPos <= ll1->size) {
+        
+        // 1. ll2의 첫 번째 노드 제거
+		int value = ll2->head->item;
+		removeNode(ll2, 0);
+        // 2. 그 노드의 값을 ll1의 insertPos에 삽입
+		insertNode(ll1, insertPos, value);
+        // 3. insertPos를 2 증가 (다음 교대 위치로)
+        insertPos += 2;  // 1 → 3 → 5 → 7...
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

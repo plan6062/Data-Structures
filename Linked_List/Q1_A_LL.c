@@ -71,7 +71,7 @@ int main()
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
-			removeAllItems(&ll);
+			//removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItems(&ll);
@@ -91,6 +91,34 @@ int main()
 int insertSortedLL(LinkedList *ll, int item)
 {
 	/* add your code here */
+	int index = 0; // 인덱스 선언
+
+	ListNode *current = ll->head; // ListNode타입의 current란 포인터가
+								// linkedlist 타입의 ll 포인터가 가리키는
+								// head를 가리키도록
+	
+	while (current != NULL && current->item < item) { // 리스트가 끝에 다다를때 까지 
+													// 또한 수가 더 큰게 나올 때 까지
+		index ++;
+		current = current->next;
+	}
+
+	if (current != NULL && current->item == item) { // 중복 검사
+		return -1;
+	}
+
+	if (insertNode(ll, index, item) == 0) { // insertNode 성공시
+		return index;
+	}
+
+	return -1;
+	
+	// 연결 리스트에 오름차순으로 삽입
+	// 현재 링크드 리스트에 있는 값 X
+	// 성공시 새로 삽입된 아이템의 인덱스 위치 반환
+	// 실패시 -1 반환
+	// 입력으로 받는 연결 리스트는 이미 정렬되어 있거나 비어있음
+	// 중복값 처리 해야함
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
