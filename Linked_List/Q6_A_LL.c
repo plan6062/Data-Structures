@@ -88,7 +88,47 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+    if (*ptrHead == NULL) return -1;
+
+	// 탐색을 위한 변수들 설정
+    ListNode *maxNode = *ptrHead;      // 현재까지 찾은 최댓값 노드 (일단 첫 번째 노드라고 가정)
+    ListNode *prevMax = NULL;          // 최댓값 노드의 '이전' 노드
+    ListNode *current = *ptrHead;      // 현재 탐색 중인 노드
+    ListNode *prev = NULL;             // 현재 노드의 '이전' 노드
+    int maxValue = (*ptrHead)->item;   // 현재까지 찾은 최댓값 (일단 첫 번째 노드의 값이라고 가정)
+
+    // 리스트를 끝까지 순회합니다.
+    while (current != NULL) {
+        // 만약 현재 노드의 값이 지금까지의 최댓값보다 크다면?
+        if (current->item > maxValue) {
+            // '대장'을 교체합니다!
+            maxValue = current->item; // 최댓값 갱신
+            maxNode = current;        // 최댓값 노드 갱신
+            prevMax = prev;           // 최댓값 노드의 '이전' 노드도 갱신
+        }
+        // 다음 노드로 이동하기 위해 현재 노드를 '이전' 노드로 만들고
+        prev = current;
+        // 한 칸 앞으로 전진합니다.
+        current = current->next;
+    }
+
+	// 최댓값 노드가 이미 맨 앞이 아니라면 (prevMax가 NULL이 아님)
+    if (prevMax != NULL) {
+        // 1. 최댓값 노드를 리스트에서 분리합니다.
+        // prevMax의 다음을 maxNode의 다음으로 연결하여 maxNode를 건너뜁니다.
+        // (20의 next가 40을 가리키게 됨)
+        prevMax->next = maxNode->next;
+
+        // 2. 최댓값 노드를 맨 앞에 삽입합니다.
+        // (50의 next가 기존의 head였던 10을 가리키게 됨)
+        maxNode->next = *ptrHead;
+        // (이제 새로운 head는 50이 됨)
+        *ptrHead = maxNode;
+    }
+    // 만약 최댓값이 이미 맨 앞에 있었다면 (prevMax == NULL),
+    // 아무것도 할 필요가 없으므로 이 로직은 실행되지 않습니다.
+	
+    return 0; // 성공적으로 완료!
 }
 
 //////////////////////////////////////////////////////////////////////////////////
